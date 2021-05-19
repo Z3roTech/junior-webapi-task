@@ -27,9 +27,11 @@ namespace ST_JuniorProject.Controllers
             string url = "http://localhost:62708/api/RequestCRMInfo";
             var content = new StringContent(JsonConvert.SerializeObject(crm), Encoding.UTF8, "application/json");
             userInfo = await url.PostAsync(content).ReceiveJson<CRMUserInfo>();
+
             if (userInfo.Login == -1) return new JsonResult("Error");
+
             InfoUpdateService.UpdateUserContact(userInfo, crm.PhoneNumber);
-            return new JsonResult("Job done successful!");
+            return new JsonResult("Job done successfully!");
         }
     }
 }
