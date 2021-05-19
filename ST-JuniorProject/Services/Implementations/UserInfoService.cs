@@ -1,35 +1,44 @@
 ﻿using Microsoft.Data.SqlClient;
 using ST_JuniorProject.Models;
-using ST_JuniorProject.Repositories.Interfaces;
 using ST_JuniorProject.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using StranzitOnline.Common.Tools;
+using Microsoft.Extensions.Configuration;
 
 namespace ST_JuniorProject.Services.Implementations
 {
-    public class UserInfoUpdateService : IUserInfoUpdateService
+    /// <summary>
+    /// Класс работы с пользовательской информацией в БД
+    /// </summary>
+    public class UserInfoService : IUserInfoService
     {
-        private IUserRepository<UserData> Users { get; set; }
-        private IUserRepository<UserContact> Contacts { get; set; }
+        private IConfiguration Configuration;
 
-        public UserInfoUpdateService(IUserRepository<UserData> users, IUserRepository<UserContact> contacts)
+        public UserInfoService(IConfiguration configuration)
         {
-            Users = users;
-            Contacts = contacts;
+            Configuration = configuration;
         }
 
+        /// <summary>
+        /// Обновление пользовательских контактов в БД
+        /// </summary>
+        /// <param name="userInfo">Информация о пользователе в БД</param>
+        /// <param name="phoneNumber">Новый контакт пользователя</param>
         public void UpdateUserContact(CRMUserInfo userInfo, string phoneNumber)
         {
-            string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=ClientInformation;Trusted_Connection=True;MultipleActiveResultSets=true";
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int clientId = GetClientId(userInfo, connectionString);
-            CreateUserContact(phoneNumber, connectionString, clientId);
+            CreateNewUserContact(phoneNumber, connectionString, clientId);
         }
 
-        private void CreateUserContact(string phoneNumber, string connectionString, int clientId)
+        /// <summary>
+        /// Создание нового контакта пользователя в БД
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <param name="connectionString"></param>
+        /// <param name="clientId"></param>
+        private void CreateNewUserContact(string phoneNumber, string connectionString, int clientId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -46,6 +55,12 @@ namespace ST_JuniorProject.Services.Implementations
             }
         }
 
+        /// <summary>
+        /// Получение идентификатора пользователя в БД
+        /// </summary>
+        /// <param name="userInfo"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         private int GetClientId(CRMUserInfo userInfo, string connectionString)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))

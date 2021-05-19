@@ -9,23 +9,35 @@ using Flurl.Http;
 
 namespace ST_JuniorProject.Controllers
 {
+    /// <summary>
+    /// Контроллер обработки уведомлений о изменение пользовательских данных
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UserInfoController : ControllerBase
     {
-        private IUserInfoUpdateService InfoUpdateService;
+        private IUserInfoService InfoUpdateService;
 
-        public UserInfoController(IUserInfoUpdateService infoUpdateService)
+        public UserInfoController(IUserInfoService infoUpdateService)
         {
             InfoUpdateService = infoUpdateService;
         }
 
+        /// <summary>
+        /// Тестовая страница для подтверждения работы приложения
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public JsonResult Get()
         {
             return new JsonResult("Server online");
         }
 
+        /// <summary>
+        /// Обработчик POST запроса api/UserInfo для обновлении контактных данных пользователя в БД
+        /// </summary>
+        /// <param name="crm">JSON-файл содержащий информацию о изменении контактных данных пользователя</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<JsonResult> Post(CRMUserRequest crm)
         {
