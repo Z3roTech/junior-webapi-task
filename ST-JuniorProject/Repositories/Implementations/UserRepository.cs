@@ -1,4 +1,5 @@
-﻿using ST_JuniorProject.Models.Base;
+﻿using Microsoft.Data.SqlClient;
+using ST_JuniorProject.Models.Base;
 using ST_JuniorProject.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;

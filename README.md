@@ -12,4 +12,4 @@ For simple add use: Add-Migration, Update-Database in Package Manager Console (V
     * Microsoft.EntityFrameworkCore.SqlServer v5.0.6 - For database providing
     * Microsoft.EntityFrameworkCore.Tools v5.0.6 - For database migration
 * Flurl v3.0.2 - For create HTTP requests
-    *Flurl.Http v3.2.0
+    * Flurl.Http v3.2.0

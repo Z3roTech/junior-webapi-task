@@ -20,6 +20,12 @@ namespace ST_JuniorProject.Controllers
             InfoUpdateService = infoUpdateService;
         }
 
+        [HttpGet]
+        public JsonResult Get()
+        {
+            return new JsonResult("Server online");
+        }
+
         [HttpPost]
         public async Task<JsonResult> Post(CRMUserRequest crm)
         {
