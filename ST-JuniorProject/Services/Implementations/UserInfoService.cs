@@ -35,9 +35,9 @@ namespace ST_JuniorProject.Services.Implementations
         /// <summary>
         /// Создание нового контакта пользователя в БД
         /// </summary>
-        /// <param name="phoneNumber"></param>
+        /// <param name="phoneNumber">Новый номер телефона пользователя</param>
         /// <param name="connectionString"></param>
-        /// <param name="clientId"></param>
+        /// <param name="clientId">Идентификатор пользователя в БД</param>
         private void CreateNewUserContact(string phoneNumber, string connectionString, int clientId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -58,7 +58,7 @@ namespace ST_JuniorProject.Services.Implementations
         /// <summary>
         /// Получение идентификатора пользователя в БД
         /// </summary>
-        /// <param name="userInfo"></param>
+        /// <param name="userInfo">Данные пользователя в БД: Логин и номер</param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
         private int GetClientId(CRMUserInfo userInfo, string connectionString)
