@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ST_JuniorProject.Models;
 using ST_JuniorProject.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 
 namespace ST_JuniorProject.Controllers
 {
@@ -22,11 +18,12 @@ namespace ST_JuniorProject.Controllers
 
         // POST api/<RequestCRMInfoController>
         [HttpPost]
-        public string Post(CRMUserRequest userRequest)
+        public CRMUserInfo Post(CRMUserRequest userRequest)
         {
             CRMUserInfo client = userRepository.GetAll().Where(c => c.CuratorId == userRequest.CuratorId).FirstOrDefault();
-            var jsonString = JsonConvert.SerializeObject(client);
-            return jsonString;
+            if (client != null)
+                return client;
+            return new CRMUserInfo() { Login = -1 };
         }
     }
 }
